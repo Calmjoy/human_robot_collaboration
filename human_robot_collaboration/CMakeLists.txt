@@ -80,6 +80,7 @@ add_executable(modular_action_provider  src/modular_furniture/tool_picker.h
                                         src/modular_furniture/part_picker.cpp
                                         src/modular_furniture/action_provider.cpp)
 add_executable(baxter_display           src/baxter_display.cpp)
+add_executable(phasespace_publisher     src/phasespace_publisher.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -95,6 +96,8 @@ add_dependencies(modular_action_provider  ${${PROJECT_NAME}_EXPORTED_TARGETS}
                                           ${catkin_EXPORTED_TARGETS})
 add_dependencies(baxter_display           ${${PROJECT_NAME}_EXPORTED_TARGETS}
                                           ${catkin_EXPORTED_TARGETS})
+add_dependencies(phasespace_publisher     ${${PROJECT_NAME}_EXPORTED_TARGETS}
+                                          ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(baxter_controller                            ${catkin_LIBRARIES} )
@@ -103,6 +106,7 @@ target_link_libraries(tower_action_provider                        ${catkin_LIBR
 target_link_libraries(hsv_detector                                 ${catkin_LIBRARIES} )
 target_link_libraries(modular_action_provider   flatpack_furniture ${catkin_LIBRARIES} )
 target_link_libraries(baxter_display            ${OpenCV_LIBS}     ${catkin_LIBRARIES} )
+target_link_libraries(phasespace_publisher                         ${catkin_LIBRARIES} )
 
 #############
 ## Install ##

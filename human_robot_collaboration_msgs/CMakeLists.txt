@@ -18,6 +18,8 @@ add_message_files(FILES
                   GoToPose.msg
                   Object.msg
                   ObjectsArray.msg
+		  PhasespacePt.msg
+		  PhasespacePtArray.msg
 )
 
 ## Generate services in the 'srv' folder

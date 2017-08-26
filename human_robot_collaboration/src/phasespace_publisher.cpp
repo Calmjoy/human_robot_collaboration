@@ -2,41 +2,77 @@
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/Point.h>
+#include <geometry_msgs/PoseArray.h>
+
 
 #include "robot_utils/rviz_publisher.h"
+#include "human_robot_collaboration_msgs/PhasespacePt.h"
+#include "human_robot_collaboration_msgs/PhasespacePtArray.h"
 
 
 using namespace std;
 
-
-void makeMarkers(const geometry_msgs::Point& coord)
+class PhasespacePublisher
 {
-    print("RECEIVED MARKER LET'S GooOO")
-    RVIZPublisher rviz_pub;
+private:
+    ros::NodeHandle nh;
+    RVIZPublisher   rviz_pub;
+    ros::Subscriber phasespace_sub;
+
+public:
+    PhasespacePublisher(std::string name);
+    void passMarkers(const human_robot_collaboration_msgs::PhasespacePtArray&);
+
+};
+
+PhasespacePublisher::PhasespacePublisher (std::string name) :
+                                          nh(name), rviz_pub(name)
+{
+    phasespace_sub = nh.subscribe("phasespace_points",
+                                  SUBSCRIBER_BUFFER,
+                                  &PhasespacePublisher::passMarkers, this);
+    rviz_pub.start();
+
+    ROS_INFO("PhasespacePublisher created!");
+}
+
+void PhasespacePublisher::passMarkers(const human_robot_collaboration_msgs::PhasespacePtArray& markers)
+{
+
+    ROS_INFO("POINT %d: %.2f, %.2f, %.2f", markers.points[0].id,
+                                           markers.points[0].pt.x,
+                                           markers.points[0].pt.y,
+                                           markers.points[0].pt.z);
+
     vector <RVIZMarker> rviz_markers;
 
-    for(size_t i = 0; i < coord.size(); ++i)
+    //int n = markers.points.size();
+    // std::vector<geometry_msgs::Point> _points(markers.points,
+    //                                           markers.points
+    //                                           + sizeof(markers.points)/sizeof(geometry_msgs::Point));
+
+    std::vector<geometry_msgs::Point> _points;
+
+    for(size_t i = 0; i < markers.points.size(); ++i)
     {
-        rviz_markers.push_back(RVIZMarker(coord,
-                                          Color.RGBA(1.0, 0.0, 1.0)));
+        _points.push_back(markers.points[i].pt);
     }
+
+
+    rviz_markers.push_back(RVIZMarker(_points));
 
     rviz_pub.setMarkers(rviz_markers);
 
 }
 
 
+
 int main(int argc, char ** argv)
 {
+    ROS_INFO("Reading points:");
     ros::init(argc, argv, "ps_markers");
-    ros::NodeHandle nh("ps_markers");
-
-
-    ros::Subscriber phasespace_sub = nh.subscribe("phasespace_points",
-                                                SUBSCRIBER_BUFFER,
-                                                makeMarkers);
+    PhasespacePublisher ps("ps_markers");
 
     ros::spin();
     return 0;
-
 }

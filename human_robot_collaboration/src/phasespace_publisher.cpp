@@ -2,8 +2,6 @@
 #include <visualization_msgs/Marker.h>
 #include <visualization_msgs/MarkerArray.h>
 #include <geometry_msgs/Point.h>
-#include <geometry_msgs/PoseArray.h>
-
 
 #include "robot_utils/rviz_publisher.h"
 #include "human_robot_collaboration_msgs/PhasespacePt.h"
@@ -38,18 +36,12 @@ PhasespacePublisher::PhasespacePublisher (std::string name) :
 
 void PhasespacePublisher::passMarkers(const human_robot_collaboration_msgs::PhasespacePtArray& markers)
 {
-
-    ROS_INFO("POINT %d: %.2f, %.2f, %.2f", markers.points[0].id,
-                                           markers.points[0].pt.x,
-                                           markers.points[0].pt.y,
-                                           markers.points[0].pt.z);
-
     vector <RVIZMarker> rviz_markers;
 
-    //int n = markers.points.size();
-    // std::vector<geometry_msgs::Point> _points(markers.points,
-    //                                           markers.points
-    //                                           + sizeof(markers.points)/sizeof(geometry_msgs::Point));
+    ROS_INFO("POINT %d: %.2f, %.2f, %.2f", markers.points[0].id,
+                                       markers.points[0].pt.x,
+                                       markers.points[0].pt.y,
+                                       markers.points[0].pt.z);
 
     std::vector<geometry_msgs::Point> _points;
 
@@ -72,6 +64,7 @@ int main(int argc, char ** argv)
     ROS_INFO("Reading points:");
     ros::init(argc, argv, "ps_markers");
     PhasespacePublisher ps("ps_markers");
+
 
     ros::spin();
     return 0;

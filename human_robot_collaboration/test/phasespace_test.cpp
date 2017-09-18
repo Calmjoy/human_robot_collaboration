@@ -1,5 +1,5 @@
+#include <gtest/gtest.h>
 #include "phasespace_publisher.h"
-
 
 using namespace std;
 
@@ -64,7 +64,7 @@ TEST(PhasespaceTest, testPassPoints)
 
 }
 
-
+// Run all the tests that were declared with TEST()
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "phasespace_test");

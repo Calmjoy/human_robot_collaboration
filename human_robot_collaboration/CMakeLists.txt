@@ -81,7 +81,7 @@ add_executable(modular_action_provider  src/modular_furniture/tool_picker.h
                                         src/modular_furniture/action_provider.cpp)
 add_executable(baxter_display           src/baxter_display.cpp)
 add_executable(phasespace_publisher     src/phasespace_publisher/phasespace_publisher.h
-					src/phasespace_publisher/phasespace_publisher.cpp)
+                                        src/phasespace_publisher/phasespace_publisher.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -142,3 +142,15 @@ foreach(dir launch)
     install(DIRECTORY ${dir}/
         DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
 endforeach(dir)
+
+#############
+## Testing ##
+#############
+
+## Add gtest based cpp test target and link libraries
+if(CATKIN_ENABLE_TESTING)
+  add_subdirectory(test)
+endif()
+
+## Add folders to be run by python nosetests
+# catkin_add_nosetests(test)

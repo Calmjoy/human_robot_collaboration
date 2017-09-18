@@ -80,7 +80,8 @@ add_executable(modular_action_provider  src/modular_furniture/tool_picker.h
                                         src/modular_furniture/part_picker.cpp
                                         src/modular_furniture/action_provider.cpp)
 add_executable(baxter_display           src/baxter_display.cpp)
-add_executable(phasespace_publisher     src/phasespace_publisher.cpp)
+add_executable(phasespace_publisher     src/phasespace_publisher/phasespace_publisher.h
+					src/phasespace_publisher/phasespace_publisher.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above

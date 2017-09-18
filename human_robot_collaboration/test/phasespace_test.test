@@ -1,0 +1,5 @@
+<launch>
+
+    <test test-name="phasespace_test" pkg="human_robot_collaboration" type="phasespace_test" />
+</launch>
+
